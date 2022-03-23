@@ -1,0 +1,54 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Template to Create an EC2 instance, EIP and associate with instance",
+    "Parameters": {
+        "ImageId": {
+            "Type": "String",
+            "Description": "Linux 2 AMI for Singapore ap-southeast-1 Region",
+            "Default": "ami-02a45d709a415958a"
+        },
+        "InstanceType": {
+            "Type": "String",
+            "Description": "Free tier",
+            "Default": "t2.micro"
+        },
+        "KeyName": {
+            "Description": "Use your own SSH Keypair to login to the instance",
+            "Type": "AWS::EC2::KeyPair::KeyName",
+            "Default": ""
+        }
+    },
+    "Resources": {
+        "DemoInstance": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": {
+                    "Ref": "ImageId"
+                },
+                "InstanceType": {
+                    "Ref": "InstanceType"
+                },
+                "KeyName": {
+                    "Ref": "KeyName"
+                }
+            }
+        },
+        "DemoElasticIP": {
+            "Type": "AWS::EC2::EIP",
+            "Properties": {
+                "Domain": "vpc",
+                "InstanceId": {
+                    "Ref": "DemoInstance"
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "DemoInstanceId": {
+            "Description": "Instance Id",
+            "Value": {
+                "Ref": "DemoInstance"
+            }
+        }
+    }
+}

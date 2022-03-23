@@ -1,0 +1,32 @@
+---
+Mappings:
+  RegionMap:
+    ap-southeast-1:
+      AMI: ami-02a45d709a415958a
+Resources:
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      AvailabilityZone: ap-southeast-1a
+      InstanceType: t2.micro
+      ImageId:
+        Fn::FindInMap:
+        - RegionMap
+        - Ref: AWS::Region
+        - AMI
+
+Outputs:
+  InstanceId: 
+    Description: Instance ID from My Ec2-Instance
+    Value: !Ref MyInstance
+    Export:
+      Name: InstanceIdForEC2-Arthur
+  ImageId: 
+    Description: Image ID from My Ec2-Instance
+    Value: 
+      Fn::FindInMap:
+        - RegionMap
+        - Ref: AWS::Region
+        - AMI
+    Export:
+      Name: ImageIdForEc2-Arthur

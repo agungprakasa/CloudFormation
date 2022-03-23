@@ -1,0 +1,25 @@
+Parameters:
+  SSHKey:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Use your own keypair
+  
+Resources:
+  myStack:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      ## Change template according your S3 location
+      TemplateURL: https://cf-templates-1c0iz0wp8dznv-ap-southeast-1.s3.ap-southeast-1.amazonaws.com/2022056FKq-LAMP_Single_Instance.template
+      Parameters:
+        KeyName: !Ref SSHKey
+        DBName: "mydb"
+        DBUser: "user"
+        DBPassword: "pass"
+        DBRootPassword: "passroot"
+        InstanceType: t2.micro
+        SSHLocation: "0.0.0.0/0"
+
+Outputs:
+  StackRef:
+    Value: !Ref myStack
+  OutputFromNestedStack:
+    Value: !GetAtt myStack.Outputs.WebsiteURL
