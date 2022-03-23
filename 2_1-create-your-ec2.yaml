@@ -20,7 +20,7 @@ Outputs:
     Description: Instance ID from My Ec2-Instance
     Value: !Ref MyInstance
     Export:
-      Name: InstanceIdForEC2-Arthur
+      Name: Kalibiru-Agung
   ImageId: 
     Description: Image ID from My Ec2-Instance
     Value: 
